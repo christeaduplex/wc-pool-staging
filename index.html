@@ -49,7 +49,9 @@
     .pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
     .pill{padding:7px 16px;border-radius:30px;border:1px solid var(--border);background:var(--card2);font-size:12px}
     .pill strong{color:var(--blue)}
+    .pill.champ{border-color:rgba(245,158,11,.35)}
     .pill.champ strong{color:var(--gold)}
+    .pill-sep{color:var(--muted);font-size:13px;display:flex;align-items:center;flex-shrink:0}
 
     /* LEADERBOARD */
     .lb-preview{max-width:700px;margin:0 auto;padding:44px 24px 20px}
@@ -387,13 +389,15 @@ function renderHome() {
 
     <div class="scoring">
       <h3>How Points Work</h3>
-      <p class="scoring-desc">Pick the winner of each match — earlier rounds are worth less, later rounds are worth more. Nail your champion pick for a massive bonus.</p>
+      <p class="scoring-desc">Pick the winner of each match — the later the round, the more points it's worth. Pick the champion correctly and earn the biggest prize.</p>
       <div class="pills">
         <div class="pill">Round of 16 <strong>1 pt</strong></div>
+        <span class="pill-sep">→</span>
         <div class="pill">Quarterfinals <strong>2 pts</strong></div>
+        <span class="pill-sep">→</span>
         <div class="pill">Semifinals <strong>4 pts</strong></div>
-        <div class="pill">Final <strong>8 pts</strong></div>
-        <div class="pill champ">🏆 Champion <strong>16 pts</strong></div>
+        <span class="pill-sep">→</span>
+        <div class="pill champ">🏆 Champion <strong>24 pts</strong></div>
       </div>
     </div>
 
