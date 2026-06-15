@@ -81,16 +81,13 @@
     .ctr-wide{max-width:920px;margin:0 auto;padding:40px 24px}
 
     /* PROGRESS */
-    .prog{margin-bottom:36px}
-    .prog-steps{display:flex;align-items:center}
-    .prog-item{display:flex;align-items:center;flex:1}
-    .prog-dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .3s}
-    .prog-dot.done{background:var(--blue);border-color:var(--blue);color:#fff}
-    .prog-dot.active{border-color:var(--blue);color:var(--blue);box-shadow:0 0 10px rgba(59,130,246,.35)}
-    .prog-line{flex:1;height:2px;background:var(--border);transition:background .3s}
-    .prog-line.done{background:var(--blue)}
-    .prog-labels{display:flex;margin-top:8px}
-    .prog-lbl{flex:1;text-align:center;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+    .prog{margin-bottom:36px;padding:4px 0}
+    .prog-steps{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px}
+    .prog-pill{padding:6px 14px;border-radius:30px;border:1px solid var(--border);background:var(--card2);font-size:11px;font-weight:700;color:var(--muted);transition:all .3s;white-space:nowrap}
+    .prog-pill.done{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.4);color:#4ade80}
+    .prog-pill.active{background:rgba(59,130,246,.18);border-color:var(--blue);color:var(--blue);box-shadow:0 0 10px rgba(59,130,246,.2)}
+    .prog-pill.active.final{background:rgba(245,158,11,.18);border-color:var(--gold);color:var(--gold);box-shadow:0 0 10px rgba(245,158,11,.2)}
+    .prog-arrow{color:var(--muted);font-size:12px;flex-shrink:0;padding:0 2px}
 
     /* PICKS */
     .rbadge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;border:1px solid var(--blue);background:rgba(59,130,246,.12);font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:14px}
@@ -534,7 +531,7 @@ function renderPickFinal() {
     ${prog(3)}
     <div class="rbadge gold">🏆 The Final — Round 4 of 4</div>
     <div class="pick-title">Who wins the World Cup?</div>
-    <div class="pick-desc">Your champion pick is worth a massive <strong style="color:var(--gold)">16 bonus points!</strong></div>
+    <div class="pick-desc">Your champion pick is worth a massive <strong style="color:var(--gold)">24 points!</strong></div>
     <div class="match-card" style="border-color:rgba(245,158,11,.4)">
       <div class="match-lbl" style="color:var(--gold);border-color:rgba(245,158,11,.2)">
         <span>🏆 WORLD CUP FINAL</span>
@@ -702,14 +699,18 @@ function renderSettingsTab() {
 // PROGRESS BAR
 function prog(activeStep) {
   const steps = ['Round of 16','Quarterfinals','Semifinals','Final'];
-  let dots = '';
+  let parts = '';
   for (let i=0;i<steps.length;i++) {
-    const cls = i<activeStep?'done':i===activeStep?'active':'';
-    dots += `<div class="prog-item"><div class="prog-dot ${cls}">${i<activeStep?'✓':i+1}</div>${i<steps.length-1?`<div class="prog-line ${i<activeStep?'done':''}"></div>`:''}</div>`;
+    const isDone = i<activeStep;
+    const isActive = i===activeStep;
+    const isFinal = i===steps.length-1;
+    let cls = 'prog-pill';
+    if (isDone) cls += ' done';
+    else if (isActive) cls += ' active' + (isFinal?' final':'');
+    parts += `<div class="${cls}">${isDone?'✓ ':''}${steps[i]}</div>`;
+    if (i<steps.length-1) parts += `<span class="prog-arrow">→</span>`;
   }
-  return `<div class="prog"><div class="prog-steps">${dots}</div>
-    <div class="prog-labels">${steps.map((s,i)=>`<div class="prog-lbl" style="${i===activeStep?'color:var(--blue)':''}">${s}</div>`).join('')}</div>
-  </div>`;
+  return `<div class="prog"><div class="prog-steps">${parts}</div></div>`;
 }
 
 // ── ACTIONS ────────────────────────────────────────────────
