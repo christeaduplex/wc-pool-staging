@@ -208,7 +208,7 @@ const SUPABASE_URL      = 'https://eoieyjgprmohofwimqre.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_2rXt0_dn7XCUKqOPlZdVwg_pbpJZlhp';
 
 const ADMIN_PW  = 'worldcup2026';
-const MAX_SCORE = 48;
+const MAX_SCORE = 24;
 const PAIRS     = [[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]];
 
 // ── State ──────────────────────────────────────────────────
@@ -315,9 +315,9 @@ function score(picks, results) {
   if (!results) return { total:0, r16:0, qf:0, sf:0, final:0, winner:0 };
   let total=0, r16=0, qf=0, sf=0, fin=0, win=0;
   (picks.r16||[]).forEach((p,i)=>{ if(p!=null&&results.r16[i]!=null&&p===results.r16[i]){total+=1;r16++;} });
-  (picks.qf ||[]).forEach((p,i)=>{ if(p!=null&&results.qf[i] !=null&&p===results.qf[i]) {total+=2;qf++; } });
-  (picks.sf ||[]).forEach((p,i)=>{ if(p!=null&&results.sf[i] !=null&&p===results.sf[i]) {total+=4;sf++; } });
-  if(picks.final!=null&&results.final!=null&&picks.final===results.final){total+=24;fin=1;win=1;}
+  (picks.qf ||[]).forEach((p,i)=>{ if(p!=null&&results.qf[i] !=null&&p===results.qf[i]) {total+=1;qf++; } });
+  (picks.sf ||[]).forEach((p,i)=>{ if(p!=null&&results.sf[i] !=null&&p===results.sf[i]) {total+=2;sf++; } });
+  if(picks.final!=null&&results.final!=null&&picks.final===results.final){total+=8;fin=1;win=1;}
   return {total,r16,qf,sf,final:fin,winner:win};
 }
 
@@ -380,7 +380,7 @@ function renderHome() {
     <div class="stats">
       <div class="stat"><div class="stat-n">${count}</div><div class="stat-l">Brackets In</div></div>
       <div class="stat"><div class="stat-n">5</div><div class="stat-l">Rounds</div></div>
-      <div class="stat"><div class="stat-n">48</div><div class="stat-l">Max Points</div></div>
+      <div class="stat"><div class="stat-n">24</div><div class="stat-l">Max Points</div></div>
       <div class="stat"><div class="stat-n">🏆</div><div class="stat-l">Glory Awaits</div></div>
     </div>
 
@@ -388,13 +388,13 @@ function renderHome() {
       <h3>How Points Work</h3>
       <p class="scoring-desc">Pick the winner of each match — the later the round, the more points it's worth. Pick the champion correctly and earn the biggest prize.</p>
       <div class="pills">
-        <div class="pill">Round of 16 <strong>1 pt</strong></div>
+        <div class="pill">Round of 16 <strong>up to 8 pts</strong></div>
         <span class="pill-sep">→</span>
-        <div class="pill">Quarterfinals <strong>2 pts</strong></div>
+        <div class="pill">Quarterfinals <strong>up to 4 pts</strong></div>
         <span class="pill-sep">→</span>
-        <div class="pill">Semifinals <strong>4 pts</strong></div>
+        <div class="pill">Semifinals <strong>up to 4 pts</strong></div>
         <span class="pill-sep">→</span>
-        <div class="pill champ">🏆 Champion <strong>24 pts</strong></div>
+        <div class="pill champ">🏆 Champion <strong>8 pts</strong></div>
       </div>
     </div>
 
@@ -427,7 +427,7 @@ function renderLeaderboard() {
 
   return `<div class="lb-full fade">
     <h2>🏆 Leaderboard</h2>
-    <p style="font-size:13px;color:var(--muted2);margin-top:4px">${played} results in · ${S.participants.length} players · Max 48 pts${S.lastRefresh ? ` · Updated ${timeAgo(S.lastRefresh)}`:''}
+    <p style="font-size:13px;color:var(--muted2);margin-top:4px">${played} results in · ${S.participants.length} players · Max 24 pts${S.lastRefresh ? ` · Updated ${timeAgo(S.lastRefresh)}`:''}
     </p>
     <table class="lb-table">
       <thead><tr><th>#</th><th>Player</th><th>Champion Pick</th><th>Score</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th></tr></thead>
@@ -531,7 +531,7 @@ function renderPickFinal() {
     ${prog(3)}
     <div class="rbadge gold">🏆 The Final — Round 4 of 4</div>
     <div class="pick-title">Who wins the World Cup?</div>
-    <div class="pick-desc">Your champion pick is worth a massive <strong style="color:var(--gold)">24 points!</strong></div>
+    <div class="pick-desc">Your champion pick is worth a massive <strong style="color:var(--gold)">8 points!</strong></div>
     <div class="match-card" style="border-color:rgba(245,158,11,.4)">
       <div class="match-lbl" style="color:var(--gold);border-color:rgba(245,158,11,.2)">
         <span>🏆 WORLD CUP FINAL</span>
